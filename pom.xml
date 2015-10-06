@@ -6,7 +6,7 @@
     <groupId>io.spring</groupId>
     <artifactId>spring-data-vaadin-crud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <description>Simple CRUD with Vaadin and Spring Data backend</description>
 
     <properties>
