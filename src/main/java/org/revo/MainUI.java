@@ -1,4 +1,4 @@
-package crud.vaadin;
+package org.revo;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -8,8 +8,8 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
-import crud.backend.Person;
-import crud.backend.PersonRepository;
+import org.revo.domain.Person;
+import org.revo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,12 +29,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 @SpringUI
 public class MainUI extends UI {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Autowired
+    @Autowired
     PersonRepository repo;
 
     private MTable<Person> list = new MTable<>(Person.class)
@@ -70,32 +65,17 @@ public class MainUI extends UI {
     static final int PAGESIZE = 45;
 
     private void listEntities() {
-        // A dead simple in memory listing would be:
-        // list.setBeans(repo.findAll());
-
-        // Lazy binding with SortableLazyList: memory and query efficient 
-        // connection from Vaadin Table to Spring Repository
-        // Note that fetching strategies can be given to MTable constructor as well.
-        // Use this approach if you expect you'll have lots of data in your 
-        // table.
-        
         list.setBeans(new SortableLazyList<>(
-                // entity fetching strategy
-                (firstRow, asc, sortProperty) -> repo.findAllBy(
-                        new PageRequest(
-                                firstRow / PAGESIZE, 
-                                PAGESIZE,
-                                asc ? Sort.Direction.ASC : Sort.Direction.DESC,
-                                // fall back to id as "natural order"
-                                sortProperty == null ? "id" : sortProperty
-                        )
-                ),
-                // count fetching strategy
+                (firstRow, asc, sortProperty) -> {
+                    PageRequest pageable = new PageRequest(firstRow / PAGESIZE, PAGESIZE,
+                            asc ? Sort.Direction.ASC : Sort.Direction.DESC,
+                            sortProperty == null ? "id" : sortProperty);
+                    return repo.findAllBy(pageable);
+                },
                 () -> (int) repo.count(),
                 PAGESIZE
         ));
         adjustActionButtonState();
-
     }
 
     public void add(ClickEvent clickEvent) {

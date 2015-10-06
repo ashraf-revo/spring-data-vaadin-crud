@@ -1,5 +1,6 @@
-package crud;
+package org.revo;
 
+import org.peimari.dawn.CdnFonts;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -8,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -16,13 +16,13 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public in.virit.WidgetSet viritinCdnInitializer() {
-        return new in.virit.WidgetSet();
+    public WidgetSet widgetSet() {
+        return new WidgetSet();
     }
 
     @Bean
-    public org.peimari.dawn.CdnFonts cdnFonts() {
-        return new org.peimari.dawn.CdnFonts();
+    public CdnFonts cdnFonts() {
+        return new CdnFonts();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package in.virit;
+package org.revo;
 
 import com.vaadin.server.*;
 import org.jsoup.nodes.DataNode;

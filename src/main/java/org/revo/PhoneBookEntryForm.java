@@ -1,9 +1,9 @@
-package crud.vaadin;
+package org.revo;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
-import crud.backend.Person;
+import org.revo.domain.Person;
 import org.vaadin.teemu.switchui.Switch;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.form.AbstractForm;
@@ -16,8 +16,6 @@ public class PhoneBookEntryForm extends AbstractForm<Person> {
     TextField email = new MTextField("Email");
     TextField phoneNumber = new MTextField("Phone");
     DateField birthDay = new DateField("Birthday");
-    // Typically you'd use std CheckBox, using Swithch to demonstrate
-    // the awesome extendions by the community: http://vaadin.com/directory
     Switch colleague = new Switch("Colleague");
 
     PhoneBookEntryForm(Person phoneBookEntry) {
@@ -28,13 +26,7 @@ public class PhoneBookEntryForm extends AbstractForm<Person> {
     @Override
     protected Component createContent() {
         return new MVerticalLayout(
-                new MFormLayout(
-                        name,
-                        email,
-                        phoneNumber,
-                        birthDay,
-                        colleague
-                ).withWidth(""),
+                new MFormLayout(name, email, phoneNumber, birthDay, colleague).withWidth(""),
                 getToolbar()
         ).withWidth("");
     }
